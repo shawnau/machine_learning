@@ -78,13 +78,14 @@ def select_aj(i, p, ei):
 
 def inner_loop(i, p):
     ei = calc_ei(p, i)
+    # select alpha_1
     if ((p.a[i] < p.c) and (p.y[i] * ei < -p.tol)) or \
         ((p.a[i] > 0) and (p.y[i] * ei > p.tol)):
-
+        # select alpha_2
         j, ej = select_aj(i, p, ei)
         a_i_old = p.a[i].copy()
         a_j_old = p.a[j].copy()
-
+        # setting clip parameters
         if p.y[i] != p.y[j]:
             L = max(0, p.a[j] - p.a[i])
             H = min(p.c, p.a[j] - p.a[i] + p.c)
@@ -92,21 +93,21 @@ def inner_loop(i, p):
             L = max(0, p.a[j] + p.a[i] - p.c)
             H = min(p.c, p.a[j] + p.a[i])
         if L == H: print('L == H'); return 0
-
+        # optimize alpha_2
         eta = np.dot(p.x[i], p.x[i].T) + np.dot(p.x[j], p.x[j].T) - 2 * np.dot(p.x[i], p.x[j].T)
         if eta < 0: print('eta < 0'); return 0
 
         p.a[j] += p.y[j] * (ei - ej) / eta
         p.a[j] = clip_a(p.a[j], H, L)
         update_ei(p, j)
-
+        # if alpha_2 stays almost the same, quit
         if abs(p.a[j] - a_j_old) < 0.00001:
             print('j not moving enough, pick another i')
             return 0
-
+        # optimize alpha_1
         p.a[i] = p.a[i] + p.y[i] * p.y[j] * (a_j_old - p.a[j])
         update_ei(p, i)
-
+        # calculate b
         bi = p.b - (ei + p.y[i] * np.dot(p.x[i], p.x[i]) * (p.a[i] - a_i_old) +
                   p.y[j] * np.dot(p.x[j], p.x[i]) * (p.a[j] - a_j_old))
         bj = bi + ei - ej
@@ -125,9 +126,10 @@ def smo_platt(x, y, c, tolerance, max_iter):
     iter = 0
     entire_set = False
     a_pairs_changed = 0
-
+    # if exceeded max_iter, or have iterared the entire set but no pairs optimized, quit
     while (iter < max_iter) and ((a_pairs_changed > 0) or (entire_set == False)):
         a_pairs_changed = 0
+        # first go through the entire set, then just go through the support vectors
         if entire_set == False:
             for i in range(p.m):
                 a_pairs_changed += inner_loop(i, p)
