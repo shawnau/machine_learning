@@ -1,0 +1,9 @@
+line 98:
+from: p.a[i] += p.y[i] * p.y[j] * (a_j_old - p.a[j])
+to: p.a[i] = p.a[i] + p.y[i] * p.y[j] * (a_j_old - p.a[j])
+
+line 128:
+from: non_bound_indexes = np.transpose(np.nonzero((p.a > 0)*(p.a < c)))
+to: non_bound_indexes = np.transpose(np.nonzero((p.a > 0)*(p.a < c)))[:, 0]
+reason: np.nonzero((p.a > 0)*(p.a < c)) is <type 'tuple'>: (array([0, 2], dtype=int64), array([0, 0], dtype=int64))
+its 2-dimensional, should cut to 1
