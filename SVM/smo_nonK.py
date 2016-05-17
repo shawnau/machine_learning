@@ -108,9 +108,10 @@ def inner_loop(i, p):
         p.a[i] = p.a[i] + p.y[i] * p.y[j] * (a_j_old - p.a[j])
         update_ei(p, i)
         # calculate b
-        bi = p.b - (ei + p.y[i] * np.dot(p.x[i], p.x[i]) * (p.a[i] - a_i_old) +
-                  p.y[j] * np.dot(p.x[j], p.x[i]) * (p.a[j] - a_j_old))
-        bj = bi + ei - ej
+        bi = p.b - (ei + p.y[i] * np.dot(p.x[i], p.x[i].T) * (p.a[i] - a_i_old) +
+                  p.y[j] * np.dot(p.x[j], p.x[i].T) * (p.a[j] - a_j_old))
+        bj = p.b - (ej + p.y[i] * np.dot(p.x[i], p.x[j].T) * (p.a[i] - a_i_old) +
+                  p.y[j] * np.dot(p.x[j], p.x[j].T) * (p.a[j] - a_j_old))
         if (p.a[i] > 0) and (p.a[i] < p.c):
             p.b = bi
         elif (p.a[j] > 0) and (p.a[j] < p.c):

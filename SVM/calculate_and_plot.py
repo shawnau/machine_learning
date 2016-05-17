@@ -10,6 +10,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 import smo_kernel as smok
+import smo_nonK as smon
 
 xcord0 = []
 ycord0 = []
@@ -37,7 +38,7 @@ ax.scatter(xcord0,ycord0, marker='s', s=90)
 ax.scatter(xcord1,ycord1, marker='o', s=50, c='red')
 
 # calculate separate plane using smo_platt
-x, y = smok.load_data('testSet.txt')
+x, y = smon.load_data('testSet.txt')
 a, b = smok.smo_platt(x, y, 0.6, 0.001, 40)
 w = dot(x.T, a * y)
 
