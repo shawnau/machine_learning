@@ -93,7 +93,7 @@ def inner_loop(i, p):
             L = max(0, p.a[j] + p.a[i] - p.c)
             H = min(p.c, p.a[j] + p.a[i])
         if L == H: print('L == H'); return 0
-        # optimize alpha_2
+        # optimize alpha_2, update e2
         eta = np.dot(p.x[i], p.x[i].T) + np.dot(p.x[j], p.x[j].T) - 2 * np.dot(p.x[i], p.x[j].T)
         if eta < 0: print('eta < 0'); return 0
 
@@ -104,7 +104,7 @@ def inner_loop(i, p):
         if abs(p.a[j] - a_j_old) < 0.00001:
             print('j not moving enough, pick another i')
             return 0
-        # optimize alpha_1
+        # optimize alpha_1, update e1
         p.a[i] = p.a[i] + p.y[i] * p.y[j] * (a_j_old - p.a[j])
         update_ei(p, i)
         # calculate b
@@ -126,7 +126,7 @@ def smo_platt(x, y, c, tolerance, max_iter):
     iter = 0
     entire_set = False
     a_pairs_changed = 0
-    # if exceeded max_iter, or have iterared the entire set but no pairs optimized, quit
+    # if exceeded max_iter, or have iterated the entire set but no pairs optimized, quit
     while (iter < max_iter) and ((a_pairs_changed > 0) or (entire_set == False)):
         a_pairs_changed = 0
         # first go through the entire set, then just go through the support vectors

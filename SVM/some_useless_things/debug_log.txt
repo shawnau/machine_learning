@@ -1,3 +1,5 @@
+smo_nonK.py
+---------
 line 98:
 from: p.a[i] += p.y[i] * p.y[j] * (a_j_old - p.a[j])
 to: p.a[i] = p.a[i] + p.y[i] * p.y[j] * (a_j_old - p.a[j])
@@ -7,3 +9,32 @@ from: non_bound_indexes = np.transpose(np.nonzero((p.a > 0)*(p.a < c)))
 to: non_bound_indexes = np.transpose(np.nonzero((p.a > 0)*(p.a < c)))[:, 0]
 reason: np.nonzero((p.a > 0)*(p.a < c)) is <type 'tuple'>: (array([0, 2], dtype=int64), array([0, 0], dtype=int64))
 its 2-dimensional, should cut to 1
+
+
+
+smo_kernel.py
+--------
+smo_k
+line 27, random_select_j()
+from: return j
+to: return int(j)
+reason: j was originally  an array[0]
+
+line 92, select_aj()
+from: random_select_aj(i, p.m)
+to: int(random_select_aj(i, p.m))
+reason: random_select_aj(i, p.m) = array[[0]]
+
+line 89, select_aj()
+from: max_index = int
+to: max_index = int(k)
+reason: k = [0]
+
+line 62-64
+change all np.zeros() into np.mat(np.zeros((self.m, self.m)))
+
+line 65, parameters()
+from: self.k[:, i] = kernel(self.x, self.x[i], k_tuple)
+to: self.k[:, i] = kernel(self.x, self.x[i], k_tuple).reshape(100,)
+reason: self.k[:, i].shape == (100,), kernel().shape == [100, 1],
+cause: 'could not broadcast input array from shape (100,1) into shape (100)'

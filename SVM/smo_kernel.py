@@ -20,10 +20,10 @@ def load_data(filename):
     return np.array(dataMatrix), np.array(labelMatrix)
 
 
-def random_select_aj(i,m):
+def random_select_aj(i, m):
     j = i
     while i == j:
-        j = int(np.random.uniform(0,m))
+        j = np.random.uniform(0, m)
     return j
 
 
@@ -35,8 +35,23 @@ def clip_a(ai, H, L):
     return ai
 
 
+def kernel(x, xi, k_tuple):
+    m, n = np.shape(x)
+    k = np.zeros((m, 1))
+    if k_tuple[0] == 'linear':
+        k = np.dot(x, xi.T)
+    elif k_tuple[0] == 'rbf':
+        for i in range(m):
+            delta_row = x[i, :] - xi
+            k[i] = np.dot(delta_row, delta_row.T)
+        k = np.exp(-(k/k_tuple[1]**2))
+    else:
+        raise NameError('Kernel not recognized')
+    return k
+
+
 class Parameters:
-    def __init__(self, data_matrix, label_matrix, c, tolerance):
+    def __init__(self, data_matrix, label_matrix, c, tolerance, k_tuple):
         self.x = data_matrix
         self.y = label_matrix
         self.c = c
@@ -45,10 +60,13 @@ class Parameters:
         self.a = np.zeros((self.m, 1))
         self.b = 0
         self.e_cache = np.zeros((self.m, 2))
+        self.k = np.zeros((self.m, self.m))
+        for i in range(self.m):
+            self.k[:, i] = kernel(self.x, self.x[i], k_tuple).reshape(100,)
 
 
 def calc_ei(p, i):
-    f_xi = float(np.dot((p.a * p.y).T, np.dot(p.x, p.x[i].T)) + p.b)
+    f_xi = float(np.dot((p.a * p.y).T, p.k[:, i]) + p.b)
     ei = f_xi - float(p.y[i])
     return ei
 
@@ -68,10 +86,10 @@ def select_aj(i, p, ei):
             ek = calc_ei(p, k)
             delta_e = abs(ei - ek)
             if delta_e > max_delta_e:
-                max_index = k; max_delta_e = delta_e; ej = ek
+                max_index = int(k); max_delta_e = delta_e; ej = ek
         return max_index, ej
     else:
-        j = random_select_aj(i, p.m)
+        j = int(random_select_aj(i, p.m))
         ej = calc_ei(p, j)
     return j, ej
 
@@ -93,7 +111,7 @@ def inner_loop(i, p):
             H = min(p.c, p.a[j] + p.a[i])
         if L == H: print('L == H'); return 0
 
-        eta = np.dot(p.x[i], p.x[i].T) + np.dot(p.x[j], p.x[j].T) - 2 * np.dot(p.x[i], p.x[j].T)
+        eta = float(p.k[i][i] + p.k[j][j] - 2 * p.k[i][j])
         if eta < 0: print('eta < 0'); return 0
 
         p.a[j] += p.y[j] * (ei - ej) / eta
@@ -107,9 +125,10 @@ def inner_loop(i, p):
         p.a[i] = p.a[i] + p.y[i] * p.y[j] * (a_j_old - p.a[j])
         update_ei(p, i)
 
-        bi = p.b - (ei + p.y[i] * np.dot(p.x[i], p.x[i]) * (p.a[i] - a_i_old) +
-                  p.y[j] * np.dot(p.x[j], p.x[i]) * (p.a[j] - a_j_old))
-        bj = bi + ei - ej
+        bi = p.b - (ei + p.y[i] * float(p.k[i][i]) * (p.a[i] - a_i_old) +
+                  p.y[j] * float(p.k[j][i]) * (p.a[j] - a_j_old))
+        bj = p.b - (ej + p.y[i] * float(p.k[i][j]) * (p.a[i] - a_i_old) +
+                  p.y[j] * float(p.k[j][j]) * (p.a[j] - a_j_old))
         if (p.a[i] > 0) and (p.a[i] < p.c):
             p.b = bi
         elif (p.a[j] > 0) and (p.a[j] < p.c):
@@ -120,8 +139,8 @@ def inner_loop(i, p):
     else: return 0
 
 
-def smo_platt(x, y, c, tolerance, max_iter):
-    p = Parameters(x, y, c, tolerance)
+def smo_platt(x, y, c, tolerance, max_iter, k_tuple=('linear', 0)):
+    p = Parameters(x, y, c, tolerance, k_tuple)
     iter = 0
     entire_set = False
     a_pairs_changed = 0
