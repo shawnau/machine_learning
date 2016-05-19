@@ -38,3 +38,13 @@ from: self.k[:, i] = kernel(self.x, self.x[i], k_tuple)
 to: self.k[:, i] = kernel(self.x, self.x[i], k_tuple).reshape(100,)
 reason: self.k[:, i].shape == (100,), kernel().shape == [100, 1],
 cause: 'could not broadcast input array from shape (100,1) into shape (100)'
+
+
+
+----
+test_toolkit
+
+line 29 in separate_x_y()
+from y = y.astype(np.int)
+to y = y.astype(np.int).reshape(m, 1)
+reason: y.shape wan originally (m,) which causes a bunch of shit happens
