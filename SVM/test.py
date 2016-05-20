@@ -13,7 +13,15 @@ def test_svm(filename, c, tolerance, max_iter, k_tuple):
     :return:
     """
     # pre-processing
-    train_matrix, cv_matrix, test_matrix = testkit.split_data(filename)
+    if filename[-3:] == 'txt':
+        data_matrix = testkit.load_data(filename)
+    elif filename[-3:] == 'mat':
+        data_matrix = testkit.load_mat(filename)
+    else:
+        print('file type not recognized')
+        return 0
+    # split into 3 parts
+    train_matrix, cv_matrix, test_matrix = testkit.split_data(data_matrix)
     t_x, t_y = testkit.separate_x_y(train_matrix)
     # train the data set with smo
     m, n = t_x.shape
@@ -41,8 +49,10 @@ def test_svm(filename, c, tolerance, max_iter, k_tuple):
         predict = np.sign(np.dot((a_list * sv_labels).T, kernel_of_samples) + b)
         if predict != cv_y[i]:
             cv_error_count += 1
-    print ('Cross validation error: %f \n' % (float(error_count)/float(m)))
+    print ('Cross validation error: %f \n' % (float(cv_error_count)/float(cv_m)))
 
 
 # --------------------TEST SAMPLE--------------------------
+
 # test_svm('test_data/testSetRBF.txt', 0.1, 0.0001, 40, ('rbf', 1.0))
+# test_svm('test_data/ex6data2.mat', 1.0, 0.0001, 40, ('rbf', 0.1))
