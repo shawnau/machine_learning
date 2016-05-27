@@ -27,7 +27,7 @@ def test_svm(filename, c, tolerance, max_iter, k_tuple):
     m, n = t_x.shape
     a, b = smok.smo_platt(t_x, t_y, c, tolerance, max_iter, k_tuple)
     # find the support vectors
-    sv_indexes = np.array(np.nonzero(a))[0]
+    sv_indexes = np.nonzero(a)[0]
     a_list = a[sv_indexes]
     sv_list = t_x[sv_indexes]
     sv_labels = t_y[sv_indexes]

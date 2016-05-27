@@ -1,4 +1,4 @@
-import tree_creation as tc
+import ID3 as tc
 
 
 def create_test_data():
@@ -21,6 +21,7 @@ def create_test_data():
     return data_set, feature_list
 
 
-data, feature = create_test_data()
-decision_tree = tc.tree_creation(data, feature)
-print (decision_tree)
+# --------------Sample-----------------------
+# data, feature = create_test_data()
+# decision_tree = tc.tree_creation(data, feature)
+# print (decision_tree)
