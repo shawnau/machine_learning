@@ -1,4 +1,6 @@
-import ID3 as tc
+import ID3 as id_three
+import CART as cart
+import test_toolkit as tt
 
 
 def create_test_data():
@@ -23,5 +25,9 @@ def create_test_data():
 
 # --------------Sample-----------------------
 # data, feature = create_test_data()
-# decision_tree = tc.tree_creation(data, feature)
+# decision_tree = id_three.tree_creation(data, feature)
+# print (decision_tree)
+
+# data_matrix = tt.load_data('test_data/ex00.txt')
+# decision_tree = cart.create_reg_tree(data_matrix, (1.0, 4))
 # print (decision_tree)
