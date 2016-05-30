@@ -77,3 +77,35 @@ def is_tree(obj):
     return type(obj).__name__ == 'dict'
 
 
+def get_mean(tree):
+    if is_tree(tree['left']):
+        tree['left'] = get_mean(tree['left'])
+    if is_tree(tree['right']):
+        tree['right'] = get_mean(tree['right'])
+    return (tree['left'] + tree['right'])/2.0
+
+
+def prune(tree, test_matrix):
+    if test_matrix.shape[0] == 0:
+        return get_mean(tree)
+
+    if is_tree(tree['left']) or is_tree(tree['right']):
+        left_set, right_set = split(test_matrix, tree['feature_index'], tree['feature_value'])
+        if is_tree(tree['left']):
+            tree['left'] = prune(tree['left'], left_set)
+        if is_tree(tree['right']):
+            tree['right'] = prune(tree['right'], right_set)
+
+    if not is_tree(tree['left']) and not is_tree(tree['right']):
+        left_set, right_set = split(test_matrix, tree['feature_index'], tree['feature_value'])
+        split_error = sum(np.power(left_set[:, -1] - tree['left'], 2)) + \
+                      sum(np.power(right_set[:, -1] - tree['right'], 2))
+        merge_value = (tree['left'] + tree['right'])/2.0
+        merge_error = sum(np.power(test_matrix[:, -1] - merge_value, 2))
+        if merge_error <= split_error:
+            print ('Merge')
+            return merge_value
+        else:
+            return tree
+    else:
+        return tree

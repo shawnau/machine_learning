@@ -37,17 +37,17 @@ def load_mat(filename):
     return data_matrix
 
 
-def split_data(data_matrix):
+def split_data(data_matrix, ratio):
     """
-    :param: data_matrix (dtape = np.array).astype(np.float)
+    :param: data_matrix (dtape = np.array).astype(np.float), ratio(tuple)
     :return: 3 np.array()
     randomly split it into 3 parts using np.vsplit
-    each part has 7:2:1 columns
+    each part has ratio[0] : ratio[1] : 1-ratio[0]-ratio[1] columns
     """
     m, n = data_matrix.shape
 
-    train_size = int(0.7 * m)
-    cv_size = int(0.2 * m)
+    train_size = int(ratio[0] * m)
+    cv_size = int(ratio[1] * m)
 
     train_matrix, cv_matrix, test_matrix = \
         np.vsplit(data_matrix[np.random.permutation(m)], (train_size, train_size + cv_size))

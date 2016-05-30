@@ -21,7 +21,7 @@ def test_svm(filename, c, tolerance, max_iter, k_tuple):
         print('file type not recognized')
         return 0
     # split into 3 parts
-    train_matrix, cv_matrix, test_matrix = testkit.split_data(data_matrix)
+    train_matrix, cv_matrix, test_matrix = testkit.split_data(data_matrix, (0.7, 0.2))
     t_x, t_y = testkit.separate_x_y(train_matrix)
     # train the data set with smo
     m, n = t_x.shape

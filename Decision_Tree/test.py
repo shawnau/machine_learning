@@ -23,11 +23,17 @@ def create_test_data():
     return data_set, feature_list
 
 
-# --------------Sample-----------------------
+# --------------ID3 Sample-----------------------
 # data, feature = create_test_data()
 # decision_tree = id_three.tree_creation(data, feature)
 # print (decision_tree)
 
-# data_matrix = tt.load_data('test_data/ex00.txt')
-# decision_tree = cart.create_reg_tree(data_matrix, (1.0, 4))
+# --------------CART Sample-----------------------
+# data_matrix = tt.load_data('test_data/ex2test.txt')
+# train_matrix, cv_matrix, test_matrix = tt.split_data(data_matrix, (0.45, 0.1))
+#
+# decision_tree = cart.create_reg_tree(train_matrix, (0, 1))
 # print (decision_tree)
+#
+# pruned_tree = cart.prune(decision_tree, test_matrix)
+# print (pruned_tree)
