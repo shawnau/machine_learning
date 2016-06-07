@@ -30,9 +30,8 @@ def split(data_set, feature_index, value):
 
 def calc_cond_entropy(data_set, feature_index):
     value_list = [vector[feature_index] for vector in data_set]
-    unique_values = set(value_list)
     cond_entropy = 0.0
-    for value in unique_values:
+    for value in set(value_list):
         reduced_data = split(data_set, feature_index, value)
         prob = len(reduced_data)/float(len(data_set))
         cond_entropy += prob * calc_entropy(reduced_data)
