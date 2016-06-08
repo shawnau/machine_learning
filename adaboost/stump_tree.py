@@ -11,6 +11,8 @@ def stump_classifier(data_matrix, feature_index, threshold, rule='lt'):
     return results
 
 
+# desision tree with only 2 leaf nodes, works on continuous feature value
+# and 2-value prediction only
 def create_stump(data_matrix, class_vector, data_weights, step_number=10):
     m, n = np.shape(data_matrix)
     stump = {}
