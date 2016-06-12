@@ -66,5 +66,3 @@ def separate_x_y(data_matrix):
     y = data_matrix[:, n-1]
     y = y.reshape((m, 1))
     return x, y
-
-

@@ -64,7 +64,5 @@ def separate_x_y(data_matrix):
     m, n = data_matrix.shape
     x = data_matrix[:, 0:(n - 1)]  # slice from 0 to n - 2
     y = data_matrix[:, n-1]  # convert to float, then to int
-    y = y.astype(np.int).reshape(m, 1)
+    y = y.astype(np.int).reshape((m, 1))
     return x, y
-
-

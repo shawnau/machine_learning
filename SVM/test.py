@@ -54,5 +54,5 @@ def test_svm(filename, c, tolerance, max_iter, k_tuple):
 
 # --------------------TEST SAMPLE--------------------------
 
-# test_svm('test_data/testSetRBF.txt', 0.1, 0.0001, 40, ('rbf', 1.0))
+# test_svm('test_data/horseColicTest2.txt', 0.1, 0.0001, 40, ('rbf', 3.0))
 # test_svm('test_data/ex6data2.mat', 1.0, 0.0001, 40, ('rbf', 0.1))

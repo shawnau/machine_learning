@@ -12,7 +12,6 @@ def adaboost(data_matrix, class_vector, iteration=40):
         stump, predictions, weighted_error = st.create_stump(data_matrix, class_vector, data_weights)
         model_list.append(stump)
         model_weights[i] = 0.5 * math.log((1.0 - weighted_error) / max(weighted_error, 1e-16))
-
         data_weights = data_weights * np.exp(-1.0 * model_weights[i] * class_vector * predictions)
         data_weights = data_weights / np.sum(data_weights)
     return model_weights, model_list
@@ -41,4 +40,4 @@ def adaboost_classify(input_matrix, model_weights, model_list):
                                                model_list[i]['threshold'],
                                                model_list[i]['rule'])
         models_output += model_weights[i] * model_prediction
-    return np.sign(models_output)
+    return models_output
