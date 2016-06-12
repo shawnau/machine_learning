@@ -25,6 +25,6 @@ def plot_roc(predict_vector, class_vector):
         ax.plot([cursor[0], cursor[0] - delta_fp], [cursor[1], cursor[1] - delta_tp], c='b')
         cursor = (cursor[0] - delta_fp, cursor[1] - delta_tp)
     ax.plot([0, 1], [0, 1], 'b--')
-    ax.axis([0, 1, 0, 1])
+    ax.axis([-0.1, 1.0, 0.0, 1.1])
     plt.show()
     print('AUC is: ', y_sum*fp_step)
