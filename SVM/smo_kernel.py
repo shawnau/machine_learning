@@ -72,9 +72,9 @@ def select_aj(i, p, ei):
     max_delta_e = 0
     p.e_cache[i] = [1, ei]
 
-    valid_indexes = np.nonzero(p.e_cache[:, 0])[0]
-    if len(valid_indexes) > 1:
-        for k in valid_indexes:
+    valid_indices = np.nonzero(p.e_cache[:, 0])[0]
+    if len(valid_indices) > 1:
+        for k in valid_indices:
             if k == i:
                 continue
             ek = calc_ei(p, k)
@@ -151,8 +151,8 @@ def smo_platt(x, y, c, tolerance, max_iter, k_tuple=('linear', 0)):
                 print('full set, iter: %d, i: %d, pairs changed: %d' % (iter_num, i, a_pairs_changed))
             iter_num += 1
         else:
-            support_vector_indexes = np.nonzero((p.a > 0)*(p.a < c))[0]
-            for i in support_vector_indexes:
+            support_vector_indices = np.nonzero((p.a > 0)*(p.a < c))[0]
+            for i in support_vector_indices:
                 a_pairs_changed += inner_loop(i, p)
                 print('support_vectors, iter: %d, i: %d, pairs changed: %d' % (iter_num, i, a_pairs_changed))
             iter_num += 1

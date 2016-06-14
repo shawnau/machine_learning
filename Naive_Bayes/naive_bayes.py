@@ -40,8 +40,8 @@ def p_class(text_class):
 
 def cond_p(feature_matrix, text_class, x_value, x_feature_index, class_index):
     class_set = list(set(text_class))
-    y_indexes = np.nonzero(np.array(text_class) == class_set[class_index])[0]
-    x_feature_list = list(feature_matrix[y_indexes, x_feature_index])
+    y_indices = np.nonzero(np.array(text_class) == class_set[class_index])[0]
+    x_feature_list = list(feature_matrix[y_indices, x_feature_index])
     return x_feature_list.count(x_value) / float(len(x_feature_list))
 
 

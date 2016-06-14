@@ -152,6 +152,7 @@ def choose_feature_c(data_matrix, option):
     return chosen_feature_index, chosen_feature_value
 
 
+# option[0]:tolerance error, option[1]:tolerance size
 def create_class_tree(data_matrix, feature_names, option):
     feature_index, feature_value = choose_feature_c(data_matrix, option)
     if feature_index == None:

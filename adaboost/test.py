@@ -1,6 +1,6 @@
 import adaboost as ab
 import test_toolkit as tt
-import plot as plot
+import plot_roc as plot
 
 data_matrix = tt.load_data('test_data/horseColicTest2.txt')
 train_matrix, cv_matrix, test_matrix = tt.split_data(data_matrix, (0.8, 0.0))
