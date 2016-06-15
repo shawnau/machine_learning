@@ -1,30 +1,20 @@
+import test_toolkit as tt
 import bagging as bg
-import numpy as np
 
 
-def create_test_data():
-    data_set = [[0, 0, 0, 0, 'n'],
-                [0, 0, 0, 1, 'n'],
-                [0, 1, 0, 1, 'y'],
-                [0, 1, 1, 0, 'y'],
-                [0, 0, 0, 0, 'n'],
-                [1, 0, 0, 0, 'n'],
-                [1, 0, 0, 1, 'n'],
-                [1, 1, 1, 1, 'y'],
-                [1, 0, 1, 2, 'y'],
-                [1, 0, 1, 2, 'y'],
-                [2, 0, 1, 2, 'y'],
-                [2, 0, 1, 1, 'y'],
-                [2, 1, 0, 1, 'y'],
-                [2, 1, 0, 2, 'y'],
-                [2, 0, 0, 0, 'n']]
-    feature_names = ['age', 'have job', 'have house', 'credit situation']
-    return data_set, feature_names
+data_matrix = tt.load_data('test_data/housingdata.txt')
+feature_list = ['age', 'have job', 'have house', 'credit situation']
 
-
-data_list, feature_list = create_test_data()
-data_matrix = np.array(data_list)
-model_list = bg.bagging(data_matrix, feature_list, (0.0, 9))
+print('--------------Bagging Test-------------------')
+model_list = bg.bagging(data_matrix, feature_list)
 prediction = bg.bagging_classify([2, 1, 0, 2], feature_list, model_list)
+for i in range(len(model_list)):
+    print(model_list[i])
+print('bagging prediction:', prediction)
 
-print(prediction)
+print('--------------Random Forest Test-------------------')
+rf_model_list = bg.bagging(data_matrix, feature_list, 1)
+rf_prediction = bg.bagging_classify([2, 0, 0, 1], feature_list, rf_model_list)
+for i in range(len(rf_model_list)):
+    print(rf_model_list[i])
+print('random forest prediction:', rf_prediction)

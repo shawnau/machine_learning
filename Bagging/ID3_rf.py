@@ -1,7 +1,9 @@
 import numpy as np
 from math import log
+import random
 import operator
 import copy
+
 
 def calc_entropy(data_matrix):
     sample_num = data_matrix.shape[0]
@@ -37,11 +39,20 @@ def calc_cond_entropy(data_matrix, feature_index):
     return cond_entropy
 
 
-def choose_feature(data_matrix):
+# RF_size is the size of features chosen when using random forest
+def choose_feature(data_matrix, rf):
     feature_num = data_matrix.shape[1] - 1
     chosen_info_gain = 0.0
     chosen_feature_index = -1
-    for i in range(feature_num):
+    if rf == 0:
+        feature_indices = range(feature_num)
+    elif rf == 1:
+        feature_size = int(log(feature_num, 2))
+        feature_indices = np.random.permutation(range(feature_num))[:feature_size]
+    else:
+        raise NameError('RF switch not recognized')
+
+    for i in feature_indices:
         info_gain = calc_entropy(data_matrix) - calc_cond_entropy(data_matrix, i)
         if info_gain > chosen_info_gain:
             chosen_info_gain = info_gain
@@ -61,14 +72,14 @@ def major_class(class_vector):
     return sorted_class_count[0][0]
 
 
-def tree_creation(data_matrix, feature_names, tolerance=0.0):
+def tree_creation(data_matrix, feature_names, rf, tolerance=0.0):
     class_vector = data_matrix[:, -1]
     if np.where(class_vector == class_vector[0])[0].shape[0] == class_vector.shape[0]:
         return class_vector[0]
     if data_matrix.shape[1] == 1:
         return major_class(class_vector)
 
-    chosen_feature_index, chosen_info_gain = choose_feature(data_matrix)
+    chosen_feature_index, chosen_info_gain = choose_feature(data_matrix, rf)
     if chosen_info_gain < tolerance:
         return major_class(class_vector)
     chosen_feature_name = feature_names[chosen_feature_index]
@@ -88,7 +99,14 @@ def tree_creation(data_matrix, feature_names, tolerance=0.0):
 def tree_prediction(input_tree, feature_names, input_x):
     if type(input_tree).__name__ == 'dict':
         feature_value = input_x[feature_names.index(input_tree.keys()[0])]
-        sub_tree = input_tree[input_tree.keys()[0]][feature_value]
+        # randomly get KeyError here, fixed using randomly picking one value in the tree
+        # if the value doesn't exist in the tree when using random forest training samples,
+        # which would lost some values in some particular training samples
+        if feature_value in input_tree[input_tree.keys()[0]].keys():
+            sub_tree = input_tree[input_tree.keys()[0]][feature_value]
+        else:
+            random_key = random.sample(input_tree[input_tree.keys()[0]], 1)[0]
+            sub_tree = input_tree[input_tree.keys()[0]][random_key]
         return tree_prediction(sub_tree, feature_names, input_x)  # this return is necessary
     else:
         predicted_class = input_tree
