@@ -6,6 +6,10 @@ import copy
 
 
 def calc_entropy(data_matrix):
+    """
+    :param data_matrix: one sample vector each row, the last element is the class label y
+    :param entropy: float number of entropy
+    """
     sample_num = data_matrix.shape[0]
     class_count = {}
     for i in range(sample_num):
@@ -23,6 +27,13 @@ def calc_entropy(data_matrix):
 
 
 def split(data_matrix, feature_index, value):
+    """
+    Split the data_matrix through feature index and it's value
+    :param data_matrix: one sample vector each row, the last element is the class label y
+    :param feature_index: column index to be splitted
+    :param value: the value to be find & split
+    :param split_matrix: splitted matrix
+    """
     line_indices = np.where(data_matrix[:, feature_index] == value)[0]
     sub_matrix = data_matrix[line_indices]
     split_matrix = np.hstack((sub_matrix[:, :feature_index], sub_matrix[:, feature_index+1:]))
@@ -39,7 +50,6 @@ def calc_cond_entropy(data_matrix, feature_index):
     return cond_entropy
 
 
-# RF_size is the size of features chosen when using random forest
 def choose_feature(data_matrix, rf):
     feature_num = data_matrix.shape[1] - 1
     chosen_info_gain = 0.0
@@ -73,9 +83,18 @@ def major_class(class_vector):
 
 
 def tree_creation(data_matrix, feature_names, rf, tolerance=0.0):
+    """
+    :param data_matrix: one sample vector each row, the last element is the class label y
+    :param feature_names: a list consist of each feature's name
+    :param rf: flag for using randomforest, 1=use, 0=not use
+    :param tolerance: tolerance of information gain
+    :return: Decision tree implemented through diction
+    """
     class_vector = data_matrix[:, -1]
+    # all the labels are the same, return their label
     if np.where(class_vector == class_vector[0])[0].shape[0] == class_vector.shape[0]:
         return class_vector[0]
+    # only one sample left, return it's label
     if data_matrix.shape[1] == 1:
         return major_class(class_vector)
 
@@ -97,6 +116,12 @@ def tree_creation(data_matrix, feature_names, rf, tolerance=0.0):
 
 
 def tree_prediction(input_tree, feature_names, input_x):
+    """
+    :param input_tree: decision tree implemented through diction
+    :param feature_names: a list consist of each feature's name
+    :param input_x: a list of input feature values
+    :return: predicted feature name
+    """
     if type(input_tree).__name__ == 'dict':
         feature_value = input_x[feature_names.index(input_tree.keys()[0])]
         # randomly get KeyError here, fixed using randomly picking one value in the tree
