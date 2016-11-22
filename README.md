@@ -1,7 +1,7 @@
 # A Simple Machine Learning Lib
 some machine learning implementations in python, all with test data.
 
-## SVM
+## SVM (支持向量机)
 
 Code:
  - Trained with the smo algorithm
@@ -13,7 +13,7 @@ Theory:
  - [SMO algorithm](http://xxuan.me/2016-05-14-SMO.html)
  - [Code review](http://xxuan.me/2016-05-16-SMO-implementation.html)
 
-## Decision Tree
+## Decision Tree (决策树)
 
 Code:
  - ID3 algorithm (works only on discrete data)
@@ -22,14 +22,14 @@ Code:
 Theory:
  - [Decision tree](http://xxuan.me/2016-05-22-decision-tree.html)
 
-## Naive Bayes
+## Naive Bayes (朴素贝叶斯)
 Code:
  - Very simple implementation (works on simple discrete data only)
 
 Theory:
  - [Naive Bayes](http://xxuan.me/2016-06-01-naive-bayes.html)
 
-## AdaBoosting Algorithm
+## AdaBoosting Algorithm (adaptive boosting算法)
 Code:
  - Adaboost algorithm with stump tree as base
  - Plot ROC of the training process
@@ -39,7 +39,7 @@ Theory:
  - [Adaboost and Forward Stagewise](http://xxuan.me/2016-06-22-forward-stagewise-algorithm.html)
  - [Gradient Boosting(No code implementation yet)](http://xxuan.me/2016-06-24-gradient-boosting.html)
 
-## Bagging(Randomforest)
+## Bagging(Randomforest) (随机森林)
 Code:
  - Randomforest with ID3 decision tree
 
