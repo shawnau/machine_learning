@@ -27,7 +27,7 @@ def load_mat(filename):
     file_content = sio.loadmat(filename)
     print('The keys are: \n')
     print(file_content.keys())
-    # this part is made only for the test data 'test_data/ex6data2.mat'
+    # this part is made only for the test data 'SVM/test_data/ex6data2.mat'
     x = np.array(file_content['X']).astype(np.float)
     y = np.array(file_content['y']).astype(np.float)
     for i in range(int(y.shape[0])):

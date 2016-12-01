@@ -23,6 +23,7 @@ def load_mat(filename):
     """
     :param: filename: matlab files (.mat)
     :return: dict info and data_matrix.astype(np.float)
+    Note: for ex4data1 only
     """
     file_content = sio.loadmat(filename)
     print('The keys are: \n')
@@ -31,7 +32,10 @@ def load_mat(filename):
     x = np.array(file_content['X']).astype(np.float)
     y = np.array(file_content['y']).astype(np.float)
     for i in range(int(y.shape[0])):
-        if y[i] == 0.0:
+        # predict 3.0 only
+        if y[i] == 3.0:
+            y[i] = 1.0
+        else:
             y[i] = -1.0
     data_matrix = np.concatenate((x, y), axis=1)
     return data_matrix
