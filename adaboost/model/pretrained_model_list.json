@@ -1,0 +1,202 @@
+[
+    {
+        "threshold": 3.0,
+        "rule": "gt",
+        "feature_index": 7
+    },
+    {
+        "threshold": 38.0,
+        "rule": "gt",
+        "feature_index": 18
+    },
+    {
+        "threshold": 1.2,
+        "rule": "lt",
+        "feature_index": 12
+    },
+    {
+        "threshold": 84.0,
+        "rule": "gt",
+        "feature_index": 3
+    },
+    {
+        "threshold": 1.0,
+        "rule": "gt",
+        "feature_index": 9
+    },
+    {
+        "threshold": 4.2000000000000002,
+        "rule": "gt",
+        "feature_index": 7
+    },
+    {
+        "threshold": 3.2000000000000002,
+        "rule": "lt",
+        "feature_index": 10
+    },
+    {
+        "threshold": 0.0,
+        "rule": "lt",
+        "feature_index": 3
+    },
+    {
+        "threshold": 0.0,
+        "rule": "gt",
+        "feature_index": 12
+    },
+    {
+        "threshold": 1.2,
+        "rule": "lt",
+        "feature_index": 12
+    },
+    {
+        "threshold": 28.800000000000001,
+        "rule": "gt",
+        "feature_index": 4
+    },
+    {
+        "threshold": 2.0,
+        "rule": "gt",
+        "feature_index": 10
+    },
+    {
+        "threshold": 29.600000000000001,
+        "rule": "lt",
+        "feature_index": 17
+    },
+    {
+        "threshold": 1.2,
+        "rule": "gt",
+        "feature_index": 7
+    },
+    {
+        "threshold": 38.0,
+        "rule": "gt",
+        "feature_index": 18
+    },
+    {
+        "threshold": 7.5999999999999996,
+        "rule": "lt",
+        "feature_index": 18
+    },
+    {
+        "threshold": 38.0,
+        "rule": "gt",
+        "feature_index": 18
+    },
+    {
+        "threshold": 56.0,
+        "rule": "gt",
+        "feature_index": 3
+    },
+    {
+        "threshold": 0.0,
+        "rule": "lt",
+        "feature_index": 20
+    },
+    {
+        "threshold": 4.2000000000000002,
+        "rule": "gt",
+        "feature_index": 7
+    },
+    {
+        "threshold": 1.2,
+        "rule": "lt",
+        "feature_index": 12
+    },
+    {
+        "threshold": 42.0,
+        "rule": "lt",
+        "feature_index": 3
+    },
+    {
+        "threshold": 0.0,
+        "rule": "gt",
+        "feature_index": 12
+    },
+    {
+        "threshold": 1.2000000000000002,
+        "rule": "gt",
+        "feature_index": 5
+    },
+    {
+        "threshold": 60.799999999999997,
+        "rule": "gt",
+        "feature_index": 18
+    },
+    {
+        "threshold": 4.0,
+        "rule": "lt",
+        "feature_index": 16
+    },
+    {
+        "threshold": 5.3999999999999995,
+        "rule": "gt",
+        "feature_index": 7
+    },
+    {
+        "threshold": 3.25,
+        "rule": "lt",
+        "feature_index": 20
+    },
+    {
+        "threshold": 70.0,
+        "rule": "gt",
+        "feature_index": 3
+    },
+    {
+        "threshold": 1.2000000000000002,
+        "rule": "lt",
+        "feature_index": 10
+    },
+    {
+        "threshold": 44.400000000000006,
+        "rule": "lt",
+        "feature_index": 17
+    },
+    {
+        "threshold": 2.1000000000000001,
+        "rule": "gt",
+        "feature_index": 13
+    },
+    {
+        "threshold": 4.0,
+        "rule": "lt",
+        "feature_index": 16
+    },
+    {
+        "threshold": 3.0,
+        "rule": "gt",
+        "feature_index": 16
+    },
+    {
+        "threshold": 38.0,
+        "rule": "gt",
+        "feature_index": 18
+    },
+    {
+        "threshold": 2.3999999999999999,
+        "rule": "gt",
+        "feature_index": 7
+    },
+    {
+        "threshold": 84.0,
+        "rule": "gt",
+        "feature_index": 3
+    },
+    {
+        "threshold": 3.25,
+        "rule": "lt",
+        "feature_index": 20
+    },
+    {
+        "threshold": 5.3999999999999995,
+        "rule": "gt",
+        "feature_index": 7
+    },
+    {
+        "threshold": 1.2,
+        "rule": "lt",
+        "feature_index": 12
+    }
+]

@@ -10,21 +10,21 @@ import numpy as np
 def save_model(m):
     weights_json = json.dumps(m.model_weights.tolist(), indent=4, separators=(',', ': '))
     models_json = json.dumps(m.model_list, indent=4, separators=(',', ': '))
-    with open("model_weights.json", 'w') as fp:
+    with open("model/model_weights.json", 'w') as fp:
         fp.write(weights_json)
-    with open("model_list.json", 'w') as fp:
+    with open("model/model_list.json", 'w') as fp:
         fp.write(models_json)
 
 
 def load_model():
-    with open("model_weights.json") as fp:
+    with open("model/model_weights.json") as fp:
         weights_json = json.loads(fp.read())
         weights_list = np.array(weights_json)
         size = weights_list.shape[0]
         model = ab.Model(size)
         model.model_weights = weights_list
 
-    with open("model_list.json") as fp:
+    with open("model/model_list.json") as fp:
         model_list = json.loads(fp.read())
         model.model_list = model_list
 
