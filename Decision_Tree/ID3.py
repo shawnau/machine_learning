@@ -1,21 +1,20 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 from math import log
 import operator
 import copy
 
-def calc_entropy(data_matrix):
-    sample_num = data_matrix.shape[0]
-    class_count = {}
-    for i in range(sample_num):
-        sample_vector = data_matrix[i, :]
-        sample_class = sample_vector[-1]
-        if sample_class not in class_count.keys():
-            class_count[sample_class] = 0
-        class_count[sample_class] += 1
 
+def calc_entropy(data_matrix):
+    """
+    :param data_matrix: numpy数组, 按行存储, 最后一列是label
+    :return:
+    """
     entropy = 0.0
-    for key in class_count:
-        mle_prob = class_count[key]/float(sample_num)
+    label_list = data_matrix[:, -1].tolist()
+    labels = set(label_list)
+    for label in labels:
+        mle_prob = label_list.count(label)/float(len(label_list))
         entropy -= mle_prob * log(mle_prob, 2)
     return entropy
 
@@ -93,3 +92,6 @@ def tree_prediction(input_tree, feature_names, input_x):
     else:
         predicted_class = input_tree
         return predicted_class
+
+if __name__ == '__main__':
+    pass

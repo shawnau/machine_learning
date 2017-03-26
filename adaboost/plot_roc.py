@@ -27,4 +27,4 @@ def plot_roc(predict_vector, class_vector):
     ax.plot([0, 1], [0, 1], 'b--')
     ax.axis([-0.1, 1.0, 0.0, 1.1])
     plt.show()
-    print('AUC is: ', y_sum*fp_step)
+    print 'AUC is: ' + str(y_sum*fp_step)

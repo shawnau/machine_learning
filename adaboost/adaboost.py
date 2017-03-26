@@ -30,7 +30,7 @@ def adaboost_train(data_matrix, labels, iteration=40):
         m.model_list.append(stump)
         m.model_weights[i] = 0.5 * math.log((1.0 - weighted_error) / max(weighted_error, 1e-16))
         data_weights = data_weights * np.exp(-1.0 * m.model_weights[i] * labels * predictions)
-        data_weights = data_weights / np.sum(data_weights)
+        data_weights /= np.sum(data_weights)
     return m
 
 
@@ -48,7 +48,7 @@ def adaboost_classify(input_matrix, m):
                                                m.model_list[i]['threshold'],
                                                m.model_list[i]['rule'])
         models_output += m.model_weights[i] * model_prediction
-    return models_output
+    return np.sign(models_output)
 
 
 def adaboost_test(data_matrix, labels, m):
@@ -60,5 +60,7 @@ def adaboost_test(data_matrix, labels, m):
     models_output = adaboost_classify(data_matrix, m)
     i_vec = (np.sign(models_output) == labels).astype(int)
     error_rate = 1 - np.count_nonzero(i_vec) / float(data_matrix.shape[0])
-    print 'model weights:'+'\n', m.model_weights, '\n'+'models_output:'+'\n', models_output, '\n'+'error rate: ', error_rate
+    print '\n'+'models_output:'+'\n', models_output.T, \
+          '\n' + 'labels:' + '\n', labels.T, \
+          '\n'+'error rate: ', error_rate
     return models_output
